@@ -5,34 +5,32 @@
 ### Problema
 > Qual problema financeiro seu agente resolve?
 
-[Sua descrição aqui]
+O agente resolve a falta de clareza e previsibilidade no fluxo de caixa pessoal/microempresarial.
 
 ### Solução
 > Como o agente resolve esse problema de forma proativa?
 
-[Sua descrição aqui]
+O agente analisa o histórico de dados persistido e antecipa cenários.
 
 ### Público-Alvo
 > Quem vai usar esse agente?
 
-[Sua descrição aqui]
-
----
+Pessoas que possuem uma renda flutuante ou um orçamento mais apertado e precisam de máxima previsibilidade para tomar decisões rápidas.
 
 ## Persona e Tom de Voz
 
 ### Nome do Agente
-[Nome escolhido]
+Finco
 
 ### Personalidade
 > Como o agente se comporta? (ex: consultivo, direto, educativo)
 
-[Sua descrição aqui]
+Consultivo e educativo.
 
 ### Tom de Comunicação
 > Formal, informal, técnico, acessível?
 
-[Sua descrição aqui]
+Formal e acessível.
 
 ### Exemplos de Linguagem
 - Saudação: [ex: "Olá! Como posso ajudar com suas finanças hoje?"]
@@ -78,4 +76,5 @@ flowchart TD
 ### Limitações Declaradas
 > O que o agente NÃO faz?
 
-[Liste aqui as limitações explícitas do agente]
+- Não realiza transações financeiras reais: Ele é um ambiente de simulação e análise, não faz PIX, pagamentos ou transferências. 
+- Não dá dicas de investimento de alto risco (Recomendações de Ações/Cripto): Ele se limita a simular cenários de renda fixa básicos (ex: Poupança vs. CDB) e organizar o orçamento existente. 
