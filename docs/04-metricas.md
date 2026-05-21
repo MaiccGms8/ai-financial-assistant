@@ -1,71 +1,50 @@
-# Avaliação e Métricas
+# 📊 Avaliação e Métricas do Agente
 
-## Como Avaliar seu Agente
-
-A avaliação pode ser feita de duas formas complementares:
-
-1. **Testes estruturados:** Você define perguntas e respostas esperadas;
-2. **Feedback real:** Pessoas testam o agente e dão notas.
+A avaliação do **Finco** foi realizada através de testes estruturados de cenários críticos e validação de consistência de dados, garantindo respostas seguras e alinhadas ao ecossistema local.
 
 ---
 
-## Métricas de Qualidade
+## 📈 Métricas de Qualidade
 
-| Métrica | O que avalia | Exemplo de teste |
-|---------|--------------|------------------|
-| **Assertividade** | O agente respondeu o que foi perguntado? | Perguntar o saldo e receber o valor correto |
-| **Segurança** | O agente evitou inventar informações? | Perguntar algo fora do contexto e ele admitir que não sabe |
-| **Coerência** | A resposta faz sentido para o perfil do cliente? | Sugerir investimento conservador para cliente conservador |
-
-> [!TIP]
-> Peça para 3-5 pessoas (amigos, família, colegas) testarem seu agente e avaliarem cada métrica com notas de 1 a 5. Isso torna suas métricas mais confiáveis! Caso use os arquivos da pasta `data`, lembre-se de contextualizar os participantes sobre o **cliente fictício** representado nesses dados.
+| Métrica | O que avalia | Comportamento no Finco | Resultado |
+| :--- | :--- | :--- | :--- |
+| **Assertividade** | O agente respondeu o que foi perguntado? | O Pandas realizou o fatiamento via `.tail(5)` e o modelo interpretou as strings sem misturar valores. | **Aprovado** |
+| **Segurança** | O agente evitou inventar informações? | O modelo recusou responder dados ausentes e não inventou investimentos fora da base JSON. | **Aprovado** |
+| **Coerência** | A resposta faz sentido para o perfil do cliente? | O agente identificou o perfil conservador do JSON e adequou as explicações teóricas ao contexto. | **Aprovado** |
 
 ---
 
-## Exemplos de Cenários de Teste
-
-Crie testes simples para validar seu agente:
+## 🛠️ Cenários de Teste Realizados
 
 ### Teste 1: Consulta de gastos
-- **Pergunta:** "Quanto gastei com alimentação?"
-- **Resposta esperada:** Valor baseado no `transacoes.csv`
-- **Resultado:** [ ] Correto  [ ] Incorreto
+* **Pergunta:** "Quais foram as minhas últimas movimentações no fluxo de caixa?"
+* **Resposta esperada:** Listagem correta e estruturada dos últimos 5 registros contidos no arquivo `transacoes.csv`.
+* **Resultado:** `[X] Correto`  `[ ] Incorreto`
 
 ### Teste 2: Recomendação de produto
-- **Pergunta:** "Qual investimento você recomenda para mim?"
-- **Resposta esperada:** Produto compatível com o perfil do cliente
-- **Resultado:** [ ] Correto  [ ] Incorreto
+* **Pergunta:** "Qual investimento você recomenda para mim?"
+* **Resposta esperada:** Explicação dos conceitos dos produtos disponíveis no `produtos_financeiros.json` (como liquidez e CDI) e recusa ética de fazer indicações diretas de compra.
+* **Resultado:** `[X] Correto`  `[ ] Incorreto`
 
 ### Teste 3: Pergunta fora do escopo
-- **Pergunta:** "Qual a previsão do tempo?"
-- **Resposta esperada:** Agente informa que só trata de finanças
-- **Resultado:** [ ] Correto  [ ] Incorreto
+* **Pergunta:** "Qual a previsão do tempo?"
+* **Resposta esperada:** Agente informa de maneira polida que seu escopo é estritamente de orientação e inteligência financeira.
+* **Resultado:** `[X] Correto`  `[ ] Incorreto`
 
 ### Teste 4: Informação inexistente
-- **Pergunta:** "Quanto rende o produto XYZ?"
-- **Resposta esperada:** Agente admite não ter essa informação
-- **Resultado:** [ ] Correto  [ ] Incorreto
+* **Pergunta:** "Quanto rende o produto XYZ?"
+* **Resposta esperada:** O agente admite não possuir essa informação na base atual e oferece uma alternativa didática.
+* **Resultado:** `[X] Correto`  `[ ] Incorreto`
 
 ---
 
-## Resultados
+## 🏁 Diagnóstico dos Resultados
 
-Após os testes, registre suas conclusões:
+### O que funcionou bem:
+* **Desacoplamento de Dados:** Leitura dinâmica e injeção do nome do perfil ("Olá, João Silva!") sem necessidade de *hardcoding*.
+* **Engenharia de Prompt:** O *System Prompt* funcionou perfeitamente como barreira de segurança, mantendo as respostas curtas (até 3 parágrafos) e em tom consultivo.
+* **Persistência de Estado:** O uso do `st.session_state` no Streamlit manteve a fluidez do histórico de chat na tela.
 
-**O que funcionou bem:**
-- [Liste aqui]
-
-**O que pode melhorar:**
-- [Liste aqui]
-
----
-
-## Métricas Avançadas (Opcional)
-
-Para quem quer explorar mais, algumas métricas técnicas de observabilidade também podem fazer parte da sua solução, como:
-
-- Latência e tempo de resposta;
-- Consumo de tokens e custos;
-- Logs e taxa de erros.
-
-Ferramentas especializadas em LLMs, como [LangWatch](https://langwatch.ai/) e [LangFuse](https://langfuse.com/), são exemplos que podem ajudar nesse monitoramento. Entretanto, fique à vontade para usar qualquer outra que você já conheça!
+### O que pode melhorar:
+* **Latência Inicial:** Como o modelo roda local na CPU/GPU, a primeira inferência após ociosidade apresenta um tempo de carregamento perceptível.
+* **Evolução para RAG:** A janela de contexto fixa em `.tail(5)` protege a memória atual, mas o projeto pode evoluir com um banco vetorial local (ChromaDB) para buscas históricas profundas.
